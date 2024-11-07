@@ -1,0 +1,11 @@
+ancap\demo\Entidad\Marca.class
+ancap\demo\Servicio\MarcaService.class
+ancap\demo\Entidad\Modelo.class
+ancap\demo\Entidad\Usuario.class
+ancap\demo\Repositorio\UsuarioRepository.class
+ancap\demo\Repositorio\ModeloRepository.class
+ancap\demo\Controlador\MarcaController.class
+ancap\demo\Repositorio\MarcaRepository.class
+ancap\demo\Controlador\ModeloController.class
+ancap\demo\Servicio\ModeloService.class
+ancap\demo\DemoApplication.class
