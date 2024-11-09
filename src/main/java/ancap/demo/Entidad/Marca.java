@@ -12,8 +12,10 @@ public class Marca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "nombre_marca")
-    private String nombre_marca;
+    
+    @Column(name = "nombre")
+    private String nombre;
+
     @Column(name="logo")
     private String logoUrl; // Nuevo campo para la URL del logo
     
@@ -23,11 +25,11 @@ public class Marca {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getNombre_marca() {
-        return nombre_marca;
+    public String getNombre() {
+        return nombre;
     }
-    public void setNombre_marca(String nombre_marca) {
-        this.nombre_marca = nombre_marca;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
     public String getLogoUrl() {
         return logoUrl;

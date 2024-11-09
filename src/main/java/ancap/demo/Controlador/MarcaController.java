@@ -30,17 +30,30 @@ public class MarcaController {
         return marcaService.crearMarca(marca);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Marca> actualizarMarca(@PathVariable Long id,
-                                                @RequestParam String nombre_marca,
-                                                @RequestParam String logoUrl) {
+    public ResponseEntity<Marca> actualizarMarca(@PathVariable Long id, @RequestBody Marca marca) {
         try {
-            // Actualizar la marca con el nombre y la URL del logo
-            Marca marcaActualizada = marcaService.actualizarMarca(id, nombre_marca, logoUrl);
+            // Obtener la marca existente por ID
+            Marca marcaExistente = marcaService.obtenerMarca(id);
+    
+            // Actualizar el nombre de la marca si se proporciona
+            if (marca.getNombre() != null && !marca.getNombre().isEmpty()) {
+                marcaExistente.setNombre(marca.getNombre());
+            }
+    
+            // Actualizar el logo de la marca si se proporciona
+            if (marca.getLogoUrl() != null && !marca.getLogoUrl().isEmpty()) {
+                marcaExistente.setLogoUrl(marca.getLogoUrl());
+            }
+    
+            // Guardar la marca actualizada
+            Marca marcaActualizada = marcaService.actualizarMarca(id, marcaExistente.getNombre(), marcaExistente.getLogoUrl());
+    
             return ResponseEntity.ok(marcaActualizada);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+    
 
     @DeleteMapping("/{id}")
     public void eliminarMarca(@PathVariable Long id) {
@@ -50,4 +63,10 @@ public class MarcaController {
     public void vaciarMarcas() {
         marcaService.vaciarMarcas();    
     }
+    // Método para buscar marcas por nombre
+    @GetMapping("/buscar/{nombre}")
+    public Marca obtenerMarcaPorNombre(@PathVariable String nombre) {
+        return marcaService.buscarMarcasPorNombre_marca(nombre);
+    }
+      
 }

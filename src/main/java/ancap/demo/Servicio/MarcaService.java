@@ -27,7 +27,7 @@ public class MarcaService {
         if (marca != null) {
             // Actualizar el nombre de la marca
             if (nombre_marca != null) {
-                marca.setNombre_marca(nombre_marca);
+                marca.setNombre(nombre_marca);
             }
     
             // Actualizar la URL del logo con la proporcionada
@@ -44,5 +44,9 @@ public class MarcaService {
     }    
     public void eliminarMarca(Long id) {
         marcaRepository.deleteById(id);
-    } 
+    }
+    public Marca buscarMarcasPorNombre_marca(String nombre) {
+        return marcaRepository.findByNombreContainingIgnoreCase(nombre);
+    }
+  
 }

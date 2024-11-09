@@ -1,7 +1,6 @@
 package ancap.demo.Entidad;
 
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,19 +16,18 @@ public class Modelo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre_modelo")  // Mapeo del nombre de la columna en la base de datos
-    private String nombre_modelo;
+    @Column(name = "nombre")  // Mapeo del nombre de la columna en la base de datos
+    private String nombre;
 
     @Column(name = "año")  // Mapeo explícito (aunque no es necesario en este caso, por claridad)
     private int año;
 
-    @Lob
     @Column(name = "image_res")  // Mapeo de la columna image_res en la base de datos
-    private byte[] imageRes;
+    private String imageRes;
 
-    @Lob
+
     @Column(name = "pdf")  // Mapeo de la columna pdf en la base de datos
-    private byte[] pdf;
+    private String pdf;
 
     @ManyToOne
     @JoinColumn(name = "id_marca")  // Relación con la tabla marca, usando id_marca como clave foránea
@@ -44,12 +42,12 @@ public class Modelo {
         this.id = id;
     }
 
-    public String getNombre_modelo() {
-        return nombre_modelo;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombre_modelo(String nombre_modelo) {
-        this.nombre_modelo = nombre_modelo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public int getAño() {
@@ -59,23 +57,6 @@ public class Modelo {
     public void setAño(int año) {
         this.año = año;
     }
-
-    public byte[] getImageRes() {
-        return imageRes;
-    }
-
-    public void setImageRes(byte[] imageRes) {
-        this.imageRes = imageRes;
-    }
-
-    public byte[] getPdf() {
-        return pdf;
-    }
-
-    public void setPdf(byte[] pdf) {
-        this.pdf = pdf;
-    }
-
     public Marca getMarca() {
         return marca;
     }
@@ -83,4 +64,21 @@ public class Modelo {
     public void setMarca(Marca marca) {
         this.marca = marca;
     }
+
+    public String getImageRes() {
+        return imageRes;
+    }
+
+    public void setImageRes(String imageRes) {
+        this.imageRes = imageRes;
+    }
+
+    public String getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(String pdf) {
+        this.pdf = pdf;
+    }
+    
 }
