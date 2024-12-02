@@ -48,33 +48,35 @@ public class ModeloController {
         @RequestParam("nombre") String nombre,
         @RequestParam("año") int año,
         @RequestParam("marca_id") Long marcaId,
+        @RequestParam("tipo_combustible") String tipoCombustible,  // Nuevo parámetro
         @RequestParam("imageRes") MultipartFile imageRes,
         @RequestParam("pdf") MultipartFile pdf) {
-
+    
         try {
             // Buscar la marca correspondiente
             Marca marca = marcaService.obtenerMarca(marcaId);
             if (marca == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Marca no encontrada.");
             }
-
+    
             // Crear el modelo
             Modelo modelo = new Modelo();
             modelo.setNombre(nombre);
             modelo.setAño(año);
+            modelo.setTipoCombustible(tipoCombustible);  // Establecer el tipo de combustible
             modelo.setMarca(marca);
-
+    
             // Subir la imagen y el PDF
             String imageUrl = fileUploadController.uploadFile(imageRes).getBody();
             String pdfUrl = fileUploadController.uploadFile(pdf).getBody();
-
+    
             modelo.setImageRes(imageUrl);
             modelo.setPdf(pdfUrl);
-
+    
             // Guardar el modelo
             Modelo modeloGuardado = modeloService.crearModelo(modelo);
             return ResponseEntity.ok(modeloGuardado);
-
+    
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el modelo: " + e.getMessage());
         }
@@ -87,6 +89,7 @@ public class ModeloController {
         @RequestParam("nombre") String nombre,
         @RequestParam("año") int año,
         @RequestParam("marca_id") Long marca_Id,
+        @RequestParam("tipo_combustible") String tipoCombustible,  // Nuevo parámetro
         @RequestParam(value = "imageRes", required = false) MultipartFile imageRes,
         @RequestParam(value = "pdf", required = false) MultipartFile pdf) {
 
@@ -100,6 +103,7 @@ public class ModeloController {
             // Actualizar los detalles del modelo
             modelo.setNombre(nombre);
             modelo.setAño(año);
+            modelo.setTipoCombustible(tipoCombustible);  // Actualizar tipo de combustible
             Marca marca = marcaService.obtenerMarca(marca_Id);
             if (marca != null) {
                 modelo.setMarca(marca);
@@ -125,7 +129,6 @@ public class ModeloController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el modelo: " + e.getMessage());
         }
     }
-
     // Eliminar un modelo
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarModelo(@PathVariable Long id) {
@@ -171,4 +174,9 @@ public class ModeloController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al cargar el PDF: " + e.getMessage());
         }
     }
+    @GetMapping("por-marca/{marcaId}")
+    public List<Modelo> obtenerModelosPorMarca(@PathVariable Long marcaId) {
+        return modeloService.obtenerModelosPorMarca(marcaId);
+    }
+
 }

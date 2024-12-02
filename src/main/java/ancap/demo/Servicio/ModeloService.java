@@ -18,8 +18,6 @@ public class ModeloService {
     @Autowired
     private ModeloRepository modeloRepository;
     
-
-    // Subir una imagen
    // Subir una imagen
     public void subirImagen(Long id, MultipartFile image) throws IOException {
     Modelo modelo = modeloRepository.findById(id).orElseThrow(() -> new RuntimeException("Modelo no encontrado"));
@@ -75,15 +73,22 @@ private String uploadFile(MultipartFile file) throws IOException {
     public List<Modelo> listarModelos() {
         return modeloRepository.findAll();
     }
+    public List<Modelo> obtenerModelosPorMarca(Long marcaId) {
+        return modeloRepository.findByMarcaId(marcaId);
+    }
 
     public Modelo obtenerModelo(Long id) {
         return modeloRepository.findById(id).orElseThrow(() -> new RuntimeException("Modelo no encontrado"));
     }
 
     public Modelo crearModelo(Modelo modelo) {
+        // Verifica el tipo de combustible
+        if (modelo.getTipoCombustible() == null || modelo.getTipoCombustible().isEmpty()) {
+            throw new IllegalArgumentException("El tipo de combustible es obligatorio.");
+        }
         return modeloRepository.save(modelo);
     }
-
+    
     public Modelo actualizarModelo(Long id, Modelo modeloDetalles) {
         Modelo modelo = modeloRepository.findById(id).orElseThrow(() -> new RuntimeException("Modelo no encontrado"));
         

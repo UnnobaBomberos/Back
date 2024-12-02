@@ -1,13 +1,15 @@
 package ancap.demo.Controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ancap.demo.Servicio.UsuarioService;
-import ancap.demo.Exception.*;
+import ancap.demo.Util.PasswordEncoder;
+import ancap.demo.Repositorio.UsuarioRepository;
 import ancap.demo.Entidad.Usuario;
-import ancap.demo.Response.ResponseMessage;
 import java.util.List;
+import java.util.Map;
 
 
 
@@ -16,6 +18,10 @@ import java.util.List;
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public List<Usuario> obtenerTodosLosUsuarios(){
@@ -40,18 +46,28 @@ public class UsuarioController {
     public void eliminarUsuario(@PathVariable Long id){
         usuarioService.eliminarUsuario(id);
     }
-    @PostMapping("/autenticar")
-    public ResponseEntity<Object> autenticarUsuario(@RequestBody Usuario usuario) {
-        try {
-            usuarioService.autenticarUsuario(usuario.getNombreUsuario(), usuario.getContrasenia());
-            // Retorna un objeto con un campo 'success' y el mensaje de autenticación
-            return ResponseEntity.ok(new ResponseMessage(true, "Usuario autenticado"));
-        } catch (SolicitudException exception) {
-            // Retorna un objeto con 'success' como false y el mensaje de error
-            return ResponseEntity.status(exception.getStatus()).body(new ResponseMessage(false, exception.getMessage()));
-        }
+   @PostMapping("/autenticar")
+    public ResponseEntity<?> autenticarUsuario(@RequestBody Usuario loginRequest) {
+        String nombreUsuario = loginRequest.getNombreUsuario();
+        String contrasenia = loginRequest.getContrasenia();
+        Usuario usuario = usuarioRepository.findByNombreUsuario(nombreUsuario);
+    if (usuario == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            .body(Map.of("success", false, "message", "Usuario no encontrado"));
     }
+
+    boolean esValida = passwordEncoder.verify(contrasenia, usuario.getContrasenia());
+
+    if (!esValida) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            .body(Map.of("success", false, "message", "Contraseña incorrecta"));
+    }
+
+    return ResponseEntity.ok(Map.of("success", true, "message", "Autenticación exitosa"));
+}
+
 }
     
   
+
 

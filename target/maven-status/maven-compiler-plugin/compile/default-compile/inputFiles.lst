@@ -12,7 +12,10 @@ C:\Users\Tobia\OneDrive\Documentos\bomberosApp\Back\demo\src\main\java\ancap\dem
 C:\Users\Tobia\OneDrive\Documentos\bomberosApp\Back\demo\src\main\java\ancap\demo\Repositorio\ModeloRepository.java
 C:\Users\Tobia\OneDrive\Documentos\bomberosApp\Back\demo\src\main\java\ancap\demo\Repositorio\UsuarioRepository.java
 C:\Users\Tobia\OneDrive\Documentos\bomberosApp\Back\demo\src\main\java\ancap\demo\Response\ResponseMessage.java
+C:\Users\Tobia\OneDrive\Documentos\bomberosApp\Back\demo\src\main\java\ancap\demo\Servicio\AutorizacionUsuario.java
 C:\Users\Tobia\OneDrive\Documentos\bomberosApp\Back\demo\src\main\java\ancap\demo\Servicio\FileService.java
 C:\Users\Tobia\OneDrive\Documentos\bomberosApp\Back\demo\src\main\java\ancap\demo\Servicio\MarcaService.java
 C:\Users\Tobia\OneDrive\Documentos\bomberosApp\Back\demo\src\main\java\ancap\demo\Servicio\ModeloService.java
 C:\Users\Tobia\OneDrive\Documentos\bomberosApp\Back\demo\src\main\java\ancap\demo\Servicio\UsuarioService.java
+C:\Users\Tobia\OneDrive\Documentos\bomberosApp\Back\demo\src\main\java\ancap\demo\Util\JwtToken.java
+C:\Users\Tobia\OneDrive\Documentos\bomberosApp\Back\demo\src\main\java\ancap\demo\Util\PasswordEncoder.java

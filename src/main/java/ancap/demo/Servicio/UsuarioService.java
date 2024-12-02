@@ -1,7 +1,6 @@
 package ancap.demo.Servicio;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.stereotype.Service;
 import ancap.demo.Entidad.Usuario;
 import ancap.demo.Exception.*;
@@ -25,16 +24,21 @@ public class UsuarioService {
     public Usuario obtenerUsuario(Long id){
         return usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuariono encontrado"));
     }
-    public Usuario crearUsuario(Usuario usuario){
-        //encripto la contraseña en un atributo
+    public Usuario crearUsuario(Usuario usuario) {
+        // Verificar si el nombre de usuario ya está registrado
+        Usuario usuarioExistente = usuarioRepository.findByNombreUsuario(usuario.getNombreUsuario());
+        if (usuarioExistente != null) {
+            throw new RuntimeException("El nombre de usuario ya está registrado");
+        }
+    
+        // Encriptar la contraseña antes de guardar
         String contraseniaEncriptada = passwordEncoder.encode(usuario.getContrasenia());
-        //la seteo en el usuario
         usuario.setContrasenia(contraseniaEncriptada);
-        //si el usuario ya esta creado, levanto excepcion antes.
-        obtenerUsuario(usuario.getId());
-        //si el usuario no se encontro se guarda el usuario
+    
+        // Guardar el nuevo usuario
         return usuarioRepository.save(usuario);
     }
+    
 
     public void eliminarUsuario(Long id){
         Usuario usuario= usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));

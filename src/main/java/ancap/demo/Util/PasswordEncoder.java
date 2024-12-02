@@ -1,7 +1,9 @@
 package ancap.demo.Util;
 
+import org.springframework.stereotype.Component;
 import com.password4j.Password;
 
+@Component
 public class PasswordEncoder {
 
         //Password.hash(rawPassword) tomamos la contraseña en texto plano

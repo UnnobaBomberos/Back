@@ -16,22 +16,24 @@ public class Modelo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre")  // Mapeo del nombre de la columna en la base de datos
+    @Column(name = "nombre")  
     private String nombre;
-
-    @Column(name = "año")  // Mapeo explícito (aunque no es necesario en este caso, por claridad)
+    
+    @Column(name = "año")  
     private int año;
 
-    @Column(name = "image_res")  // Mapeo de la columna image_res en la base de datos
+    @Column(name = "image_res")  
     private String imageRes;
 
-
-    @Column(name = "pdf")  // Mapeo de la columna pdf en la base de datos
+    @Column(name = "pdf")  
     private String pdf;
 
     @ManyToOne
-    @JoinColumn(name = "id_marca")  // Relación con la tabla marca, usando id_marca como clave foránea
-    private Marca marca;  // Esto te permitirá acceder a la marca asociada
+    @JoinColumn(name = "id_marca")  
+    private Marca marca;
+
+    @Column(name = "tipo_combustible") // Nuevo atributo
+    private String tipoCombustible;  // Eléctrico, Híbrido, Combustión
 
     // Getters y Setters
     public Long getId() {
@@ -57,6 +59,7 @@ public class Modelo {
     public void setAño(int año) {
         this.año = año;
     }
+
     public Marca getMarca() {
         return marca;
     }
@@ -80,5 +83,13 @@ public class Modelo {
     public void setPdf(String pdf) {
         this.pdf = pdf;
     }
-    
+
+    public String getTipoCombustible() {
+        return tipoCombustible;
+    }
+
+    public void setTipoCombustible(String tipoCombustible) {
+        this.tipoCombustible = tipoCombustible;
+    }
 }
+

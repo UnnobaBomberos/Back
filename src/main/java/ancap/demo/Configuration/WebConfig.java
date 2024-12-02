@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(@NonNull CorsRegistry registry) {
         // Aquí se definen los orígenes permitidos, puedes agregar más según necesites
         registry.addMapping("/**")  // Aplica a todos los endpoints
-                .allowedOrigins("http://localhost:3000", "http://tudominio.com")  // Los orígenes permitidos
+                .allowedOrigins("http://localhost:3000", "http://10.0.2.2")  // Los orígenes permitidos
                 .allowedMethods("GET", "POST", "PUT", "DELETE")  // Métodos permitidos
                 .allowedHeaders("*")  // Permitir todos los encabezados
                 .allowCredentials(true);  // Permite el envío de cookies si es necesario
@@ -21,6 +21,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(@NonNull ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/files/**")
-                .addResourceLocations("file:/C:/uploaded_files/");  // Ruta al directorio de archivos
+                .addResourceLocations("file:/C:/uploaded_files/");  // Esta es la carpeta donde están los archivos
     }
 }
